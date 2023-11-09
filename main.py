@@ -1,6 +1,10 @@
 from openai import OpenAI
-client = OpenAI(api_key="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")
+import toml
 
+config = toml.load("config.toml")
+open_key = config["openai"]["key"]
+print(type(open_key))
+client = OpenAI(api_key=open_key)
 
 completion = client.chat.completions.create(
   model="gpt-3.5-turbo",
@@ -9,4 +13,5 @@ completion = client.chat.completions.create(
     {"role": "user", "content": "Compose a poem that explains the concept of recursion in programming."}
   ]
 )
+
 print(completion.choices[0].message)
